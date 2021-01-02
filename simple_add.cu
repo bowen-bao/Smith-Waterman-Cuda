@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 __global__ void add(int *a, int *b, int *c){
 	*c = *a + *b;
 }
@@ -5,8 +7,8 @@ __global__ void add(int *a, int *b, int *c){
 int main(void){
 	
 	int a, b, c;			//host copies of a, b, c
-	int *d_a, *d_b, *d_c	//device copies of a, b, c
-	int size = sizeof(int)
+	int *d_a, *d_b, *d_c;	//device copies of a, b, c
+	int size = sizeof(int);
 
 	//Allocate space for device copies of a, b, c
 	cudaMalloc((void **) &d_a, size);	//take in address of pointer 
@@ -19,16 +21,20 @@ int main(void){
 
 	//copy inputs to device 
 	cudaMemcpy(d_a, &a, size, cudaMemcpyHostToDevice);
-	cudaMemcpy(d_b, &a, size, cudaMemcpyHostToDevice);
+	cudaMemcpy(d_b, &b, size, cudaMemcpyHostToDevice);
 
 	//launch add() kernel on GPU
-	add<<<1,1>>>(d_a, d_b, d_c)
+	add<<<1,1>>>(d_a, d_b, d_c);
 
 	//copy result back to host 
 	cudaMemcpy(&c, d_c, size, cudaMemcpyDeviceToHost);
 
+	printf("a(%d) + b(%d) = %d\n", a,b,c);
+	
 	//Cleanup 
-	cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+	cudaFree(d_a); 
+	cudaFree(d_b);
+	cudaFree(d_c);
 	return 0;
 
 }
