@@ -8,7 +8,7 @@ __global__ void add(int *a, int *b, int *c){
 
 void random_ints(int *nums, int size){
 	
-	for (int i = 0; i < size, i++){
+	for (int i = 0; i < size; i++){
 		nums[i] = 1;
 	}
 }
@@ -17,8 +17,6 @@ void random_ints(int *nums, int size){
 #define N 512
 int main(void){
 	
-	// Intializes random number generator
-	time_t t; 
 	int *a, *b, *c;			//host copies of a, b, c
 	int *d_a, *d_b, *d_c;	//device copies of a, b, c
 	int size = N * sizeof(int);
@@ -30,13 +28,13 @@ int main(void){
 
 
 	// Alloc space for host copies of a, b, c and setup input values 
-	a = int( *)malloc(size);
+	a = (int *)malloc(size);
 	random_ints(a, N);
 
-	b = int( *)malloc(size);
+	b = (int *)malloc(size);
 	random_ints(b, N); 
 
-	c = int( *)malloc(size);
+	c = (int *)malloc(size);
 
 	//copy inputs to device 
 	cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
