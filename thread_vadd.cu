@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-__global__ void add(int *a, int *b, int *c){
-	c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x]; 
+__global__ void add(int *a, int *b, int *c, int n){
+	int index = threadIdx.x + blockIdx.x * blockDim.x;
+	if (index < n)
+		c[index] = a[index] + b[index]; 
 }
 
 
@@ -40,8 +42,9 @@ int main(void){
 	cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
 	cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
 
-	//launch add() kernel on GPU with N threads
-	add<<<1, N>>>(d_a, d_b, d_c);
+	//launch add() kernel on GPU 
+	//M is number of threads per block 
+	add<<<(N + M-1) / M, M>>>(d_a, d_b, d_c, N);
 
 	//copy result back to host 
 	cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
@@ -56,7 +59,7 @@ int main(void){
 	free(a);
 	free(b);
 	free(c);
-
+ 
 	cudaFree(d_a); 
 	cudaFree(d_b);
 	cudaFree(d_c);
