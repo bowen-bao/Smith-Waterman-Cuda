@@ -5,9 +5,6 @@
 #include <tuple>
 
 #include "sequenceAlignment.h"
-//#ifndef SEQUENCEALIGNMENT_H
-//#define SEQUENCEALIGNMENT_H
-
 
 void printVector(std::vector<std::tuple<std::string, std::string>>vect){
 
@@ -20,7 +17,7 @@ void printVector(std::vector<std::tuple<std::string, std::string>>vect){
 
 //Return a tuple of the query sequence name and the sequence string given the query file name
 //Query file name only contains one sequence
-std::tuple<std::string, std::string> createQuerySequence(std::string queryfilename){
+std::tuple<std::string, std::string> createQuerySequence(const std::string& queryfilename){
     std::ifstream file(queryfilename);
     std::string str;
     std::string sequence;
@@ -30,9 +27,9 @@ std::tuple<std::string, std::string> createQuerySequence(std::string queryfilena
         if (str.rfind(">", 0) == 0){
             name = str;
             sequence = "";
-        }else(
-                sequence += str
-            );
+        }else {
+            sequence += str;
+        };
     }
     //end of file - return tuple of sequence
     return std::make_tuple(name, sequence);
@@ -40,7 +37,7 @@ std::tuple<std::string, std::string> createQuerySequence(std::string queryfilena
 
 //Return a vector of tuples of the query sequence name and the sequence string given the database file name
 //Database file name contains multiple sequences
-std::vector<std::tuple<std::string, std::string>> createDatabaseSequences(std::string databasefilename){
+std::vector<std::tuple<std::string, std::string>> createDatabaseSequences(const std::string& databasefilename){
 
     std::ifstream file(databasefilename);
     std::string str;
@@ -57,9 +54,9 @@ std::vector<std::tuple<std::string, std::string>> createDatabaseSequences(std::s
             //reset the name and sequence
             name = str;
             sequence = "";
-        }else(
-                sequence += str
-            );
+        }else{
+            sequence += str;
+        };
     }
     //end of file - push in the last sequence
     sequences.push_back(std::make_tuple(name, sequence));
@@ -164,5 +161,3 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
-
-//#endif

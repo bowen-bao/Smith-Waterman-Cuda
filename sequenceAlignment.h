@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 
-
 std::map<std::tuple<char, char>, int> PAM250 = {
         {{'W', 'F'}, 0}, {{'L', 'R'}, -3}, {{'S', 'P'}, 1}, {{'V', 'T'}, 0},
         {{'Q', 'Q'}, 4}, {{'N', 'A'}, 0}, {{'Z', 'Y'}, -4}, {{'W', 'R'}, 2},
