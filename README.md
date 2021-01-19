@@ -1,6 +1,8 @@
 # Smith-Waterman-Cuda
 Implementation of the local Smith-Waterman and global ‎Needleman–Wunsch DNA sequence alignment
 
+The GPU Cuda implementation is still a work in process. 
+
 ## Execution
 
 Run the command:
