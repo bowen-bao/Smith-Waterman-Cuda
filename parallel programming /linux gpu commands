@@ -1,9 +1,0 @@
-(base) bowens-air:~ bowenbao$ ssh bbao@linux.cs.uchicago.edu
-bbao@linux3:~$ srun -p titan --pty --gres=gpu:1 /bin/bash
-
-bbao@gpu3:~/Smith-Waterman-Cuda$ cuda_version=9.2
-bbao@gpu3:~/Smith-Waterman-Cuda$ export CUDA_HOME=/usr/local/cuda-${cuda_version}
-bbao@gpu3:~/Smith-Waterman-Cuda$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
-bbao@gpu3:~/Smith-Waterman-Cuda$ export PATH=$PATH:/usr/local/cuda/bin
-bbao@gpu3:~/Smith-Waterman-Cuda$ nvcc block_vadd.cu 
-bbao@gpu3:~/Smith-Waterman-Cuda$ ./a.out
